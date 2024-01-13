@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const dotenv = require('dotenv');
 const fs = require('fs');
 const path = require('path');
+const authenticateUserMiddleware = require('./middlewares/authenticate');
 
 // Configuring dotenv
 dotenv.config();
@@ -33,6 +34,9 @@ app.use(cors());
 // Configuring body-parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Authentication middleware
+app.use('/api', authenticateUserMiddleware)
 
 // Create table containg all routes
 var Table = require('cli-table');

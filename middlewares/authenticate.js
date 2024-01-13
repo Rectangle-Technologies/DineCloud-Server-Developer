@@ -3,6 +3,13 @@ const { errorResponse } = require("../utils/response");
 const jwt = require('@netra-development-solutions/utils.crypto.jsonwebtoken');
 
 const authenticateUserMiddleware = async (req, res, next) => {
+    // Get whole url from request
+    const url = req.originalUrl.split('?')[0];
+
+    // By pass authentication for login route
+    if (url === "/api/developer/login") {
+        return next();
+    }
     try {
         // Extract token
         const token = req.header('Authorization')?.replace('Bearer ', '')

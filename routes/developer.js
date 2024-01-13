@@ -1,15 +1,12 @@
 const { LoginDeveloper } = require("../controllers/developer/login")
 const { RegisterDeveloper } = require("../controllers/developer/register")
-const authenticateUserMiddleware = require("../middlewares/authenticate")
 
 const routesConfig = [
     {
         method: 'post',
         path: '/register',
         controller: RegisterDeveloper,
-        middlewares: [
-            authenticateUserMiddleware
-        ],
+        middlewares: [],
         description: 'Register user'
     },
     {
