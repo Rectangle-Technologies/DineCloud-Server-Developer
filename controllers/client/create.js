@@ -3,11 +3,13 @@ const { saveDataByModel } = require("../../utils/comms/modelData")
 const { errorResponse, successResponse } = require("../../utils/response")
 const { generateBranchCode, generateUserCode } = require("../../utils/generateClientCode")
 const bcrypt = require('bcryptjs')
+const { getSchemasByFilter } = require("../../utils/comms/validationEngine")
+const { saveSchema } = require("../../utils/comms/validationEngine")
 
 exports.CreateClient = async (req, res) => {
     try {
         // Create all domain models for the client
-        const domainModelsResponse = await getDomainModelsByFilter({ clientCode: req?.user?.clientCode }, req.headers.authorization, {
+        const domainModelsResponse = await getDomainModelsByFilter({ clientCode: process.env.BASE_CLIENT_CODE }, req.headers.authorization, {
             'ByPass-Key': process.env.BYPASS_KEY,
         })
         const domainModels = domainModelsResponse?.data?.data
@@ -68,7 +70,28 @@ exports.CreateClient = async (req, res) => {
             'Client-Id': client._id,
         })
 
-        successResponse(res, client, 'Client created successfully')
+        // Create JSON Schema Cores
+        const schemaCoresResponse = await getSchemasByFilter({}, req.headers.authorization, {
+            'Bypass-Key': process.env.BYPASS_KEY,
+            'Client-Code': process.env.BASE_CLIENT_CODE,
+        })
+        const schemaCores = schemaCoresResponse?.data?.data
+        for (const schemaCore of schemaCores) {
+            const shcemaCoreData = {
+                name: schemaCore.name,
+                key: schemaCore.key,
+                description: schemaCore.description,
+                version: schemaCore.version,
+                schema: schemaCore.schema,
+            }
+            await saveSchema(shcemaCoreData, req.headers.authorization, {
+                'Bypass-Key': process.env.BYPASS_KEY,
+                'Client-Code': req.body.clientCode,
+                'Client-Id': client._id
+            })
+        }
+
+        successResponse(res, { client, user: userResponse?.data?.data[0]?.User }, 'Client created successfully')
     } catch (error) {
         console.log('error', error)
         const errorObject = error?.response?.data || error
