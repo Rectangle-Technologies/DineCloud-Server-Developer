@@ -27,7 +27,7 @@ exports.RegisterDeveloper = async (req, res) => {
         await Developer.create(data)
 
         // Generate token
-        const token = jwt.sign({ email: data.email }, process.env.AES_GCM_ENCRYPTION_KEY, process.env.JWT_TOKEN_SECRET, process.env.AES_GCM_ENCRYPTION_IV);
+        const token = jwt.sign({ email: data.email });
 
         return successResponse(res, { email: data.email, token }, "Developer registered successfully")
     } catch (error) {

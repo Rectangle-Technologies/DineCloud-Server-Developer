@@ -4,14 +4,14 @@ const { RegisterDeveloper } = require("../controllers/developer/register")
 const routesConfig = [
     {
         method: 'post',
-        path: '/register',
+        path: '/registerDeveloper',
         controller: RegisterDeveloper,
         middlewares: [],
         description: 'Register user'
     },
     {
         method: 'post',
-        path: '/login',
+        path: '/loginDeveloper',
         controller: LoginDeveloper,
         middlewares: [],
         description: 'Login user'

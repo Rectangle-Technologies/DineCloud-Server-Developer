@@ -25,7 +25,7 @@ exports.LoginDeveloper = async (req, res) => {
         }
 
         // Generate token
-        const token = jwt.sign({ email: data.email }, process.env.AES_GCM_ENCRYPTION_KEY, process.env.JWT_TOKEN_SECRET, process.env.AES_GCM_ENCRYPTION_IV);
+        const token = jwt.sign({ email: developer.email, isAdmin: developer.isAdmin });
 
         return successResponse(res, { email: data.email, token }, "Developer logged in successfully")
     } catch (error) {

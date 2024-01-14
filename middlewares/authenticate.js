@@ -7,7 +7,7 @@ const authenticateUserMiddleware = async (req, res, next) => {
     const url = req.originalUrl.split('?')[0];
 
     // By pass authentication for login route
-    if (url === "/api/developer/login") {
+    if (url === "/api/developer/loginDeveloper") {
         return next();
     }
     try {
