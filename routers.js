@@ -6,6 +6,10 @@ const routers = [
     {
         path: '/client',
         router: require('./routes/client')
+    },
+    {
+        path: '/token',
+        router: require('./routes/token')
     }
 ]
 
