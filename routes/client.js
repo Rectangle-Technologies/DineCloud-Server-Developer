@@ -1,4 +1,5 @@
 const { CreateClient } = require("../controllers/client/create")
+const { FetchAllClient } = require("../controllers/client/fetchAll")
 const { RegisterClient } = require("../controllers/client/register")
 
 const routesConfig = [
@@ -15,6 +16,13 @@ const routesConfig = [
         controller: RegisterClient,
         middlewares: [],
         description: 'Register a new client'
+    },
+    {
+        method: 'get',
+        path: '/fetchClients',
+        controller: FetchAllClient,
+        middlewares: [],
+        description: 'Fetch all clients'
     }
 ]
 
