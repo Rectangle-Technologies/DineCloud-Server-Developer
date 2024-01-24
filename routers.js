@@ -6,6 +6,10 @@ const routers = [
     {
         path: '/client',
         router: require('./routes/client')
+    },
+    {
+        path: '/env',
+        router: require('./routes/env')
     }
 ]
 
