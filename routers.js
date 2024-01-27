@@ -8,6 +8,10 @@ const routers = [
         router: require('./routes/client')
     },
     {
+        path: '/env',
+        router: require('./routes/env')
+    },
+    {
         path: '/token',
         router: require('./routes/token')
     }

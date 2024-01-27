@@ -9,6 +9,7 @@ const successResponse = (res, data, message) => {
 };
 
 const errorResponse = (res, error, statuscode, data = {}) => {
+    console.log(error)
     return res.status(statuscode).json(error);
 };
 
